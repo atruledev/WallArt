@@ -97,7 +97,7 @@ function WallEdit({ imageName, categories, onSave, onClose }) {
     <div
       id="drawer-update-product-default"
       style={{ zIndex: "999" }}
-      classNameName="fixed top-0 right-0 w-full h-screen max-w-xs p-4 overflow-y-auto transition-transform bg-white dark:bg-gray-800 transform-none"
+      className="fixed top-0 right-0 w-full h-screen max-w-xs p-4 overflow-y-auto transition-transform bg-white dark:bg-gray-800 transform-none"
       tabIndex="-1"
       aria-labelledby="drawer-label"
       aria-modal="true"
@@ -105,7 +105,7 @@ function WallEdit({ imageName, categories, onSave, onClose }) {
     >
       <h5
         id="drawer-label"
-        classNameName="inline-flex items-center mb-6 text-sm font-semibold text-gray-500 uppercase dark:text-gray-400"
+        className="inline-flex items-center mb-6 text-sm font-semibold text-gray-500 uppercase dark:text-gray-400"
       >
         {categories ? "Update Wallaper" : "Add Wallaper"}
       </h5>
@@ -114,11 +114,11 @@ function WallEdit({ imageName, categories, onSave, onClose }) {
         type="button"
         data-drawer-dismiss="drawer-update-product-default"
         aria-controls="drawer-update-product-default"
-        classNameName="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+        className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
       >
         <svg
           aria-hidden="true"
-          classNameName="w-5 h-5"
+          className="w-5 h-5"
           fill="currentColor"
           viewBox="0 0 20 20"
           xmlns="http://www.w3.org/2000/svg"
@@ -129,14 +129,14 @@ function WallEdit({ imageName, categories, onSave, onClose }) {
             clipRule="evenodd"
           ></path>
         </svg>
-        <span classNameName="sr-only">Close menu</span>
+        <span className="sr-only">Close menu</span>
       </button>
       <form onSubmit={handleSubmit}>
-        <div classNameName="space-y-4">
+        <div className="space-y-4">
           <div>
             <label
               htmlFor="category"
-              classNameName="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
               {imageName}
             </label>
@@ -150,7 +150,7 @@ function WallEdit({ imageName, categories, onSave, onClose }) {
                         src={p}
                         width={250}
                         height={200}
-                        classNameName="p-5"
+                        className="p-5"
                         alt="Preview"
                       />;
                     })}
@@ -160,7 +160,7 @@ function WallEdit({ imageName, categories, onSave, onClose }) {
                     src={categoryData?.wallpaper_image_url}
                     width={250}
                     height={200}
-                    classNameName="p-5"
+                    className="p-5"
                     alt="Category"
                   />
                 )}
@@ -173,7 +173,7 @@ function WallEdit({ imageName, categories, onSave, onClose }) {
               name="category_image"
               multiple
               onChange={handleImageChange}
-              classNameName=" text-sm font-normal text-gwhite whitespace-nowrap dark:text-gray-400"
+              className=" text-sm font-normal text-gwhite whitespace-nowrap dark:text-gray-400"
             />
           </div>
           {!categories ? (
@@ -181,7 +181,7 @@ function WallEdit({ imageName, categories, onSave, onClose }) {
               <div>
                 <label
                   htmlFor="mySelect"
-                  classNameName="p-2 text-sm font-normal text-white whitespace-nowrap "
+                  className="p-2 text-sm font-normal text-white whitespace-nowrap "
                 >
                   Choose Category:
                 </label>
@@ -199,7 +199,7 @@ function WallEdit({ imageName, categories, onSave, onClose }) {
                    <option
                   
                     value= "none"
-                    classNameName="p-2 text-sm font-normal text-black whitespace-nowrap dark:text-gray-400"
+                    className="p-2 text-sm font-normal text-black whitespace-nowrap dark:text-gray-400"
                   >
                     none
                   </option>
@@ -208,7 +208,7 @@ function WallEdit({ imageName, categories, onSave, onClose }) {
                       <option
                         key={c.id}
                         value={c.category_name}
-                        classNameName="p-2 text-sm font-normal text-black whitespace-nowrap dark:text-gray-400"
+                        className="p-2 text-sm font-normal text-black whitespace-nowrap dark:text-gray-400"
                       >
                         {c.category_name}
                       </option>
@@ -224,14 +224,14 @@ function WallEdit({ imageName, categories, onSave, onClose }) {
             </>
           )}
         </div>
-        {err? <p classNameName="text-red-600 p-2"> Category Required</p> : <>{null}</>}
-        <div classNameName="bottom-0 left-0 flex justify-center w-full pb-4 mt-4 space-x-4 sm:absolute sm:px-4 sm:mt-0">
+        {err? <p className="text-red-600 p-2"> Category Required</p> : <>{null}</>}
+        <div className="bottom-0 left-0 flex justify-center w-full pb-4 mt-4 space-x-4 sm:absolute sm:px-4 sm:mt-0">
           {Loading ? (
-          <div className="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+          <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
           ) : (
             <button
               type="submit"
-              classNameName="w-full justify-center text-white bg-blue-500 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+              className="w-full justify-center text-white bg-blue-500 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
             >
               {categories ? "Update" : "Add"}
             </button>

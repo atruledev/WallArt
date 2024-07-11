@@ -9,15 +9,14 @@ function Auth() {
     console.log("hello");
     console.log(token);
     if (!token) {
-      navigate("/"); 
+      navigate("/");
     }
   }, [navigate]);
 
   return (
     <div>
-    
       <main>
-        <Outlet /> 
+        <Outlet />
       </main>
     </div>
   );
