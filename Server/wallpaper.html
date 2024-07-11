@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Category</title>
+</head>
+<body>
+    <h1>Add wallpaper</h1>
+    <form action="http://localhost:3000/api/createcategories/add" method="POST" >
+        <label for="name">wallaper Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="category_image">wallaper Image:</label>
+        <input type="file" id="wallpaper_image" name="wallpaper_image" accept="image/*" required><br><br>
+        
+       
+        
+        <input type="submit" value="Add wallaper">
+    </form>
+</body>
+</html>

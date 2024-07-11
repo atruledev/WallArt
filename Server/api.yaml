@@ -1,0 +1,254 @@
+openapi: 3.0.0
+info:
+  title: Wallpaper and Categories API
+  version: 1.0.0
+  description: API for managing wallpapers and categories
+servers:
+  - url: http://localhost:3000
+    description: Local server
+
+paths:
+  /wallpapers:
+    get:
+      tags:
+        - Wallpaper
+      summary: Get all wallpapers
+      operationId: getWallpapers
+      responses:
+        '200':
+          description: A list of wallpapers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Wallpaper'
+
+    post:
+      tags:
+        - Wallpaper
+      summary: Add new wallpapers
+      operationId: addWallpapers
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                category_name:
+                  type: string
+                files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        '201':
+          description: Wallpapers uploaded successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  newWallpapers:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Wallpaper'
+        '400':
+          description: Invalid category
+        '500':
+          description: Internal server error
+
+  /wallpapers/{id}:
+    put:
+      tags:
+        - Wallpaper
+      summary: Update a wallpaper
+      operationId: updateWallpaper
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Wallpaper updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '500':
+          description: Update failed
+
+    delete:
+      tags:
+        - Wallpaper
+      summary: Delete a wallpaper
+      operationId: deleteWallpaper
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Wallpaper deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '500':
+          description: Error while deleting
+
+  /categories:
+    get:
+      tags:
+        - Category
+      summary: Get all categories
+      operationId: getCategories
+      responses:
+        '200':
+          description: A list of categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+
+    post:
+      tags:
+        - Category
+      summary: Upload a new category
+      operationId: uploadCategories
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Category uploaded successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '500':
+          description: Upload failed
+
+  /categories/{id}:
+    put:
+      tags:
+        - Category
+      summary: Update a category
+      operationId: updateCategories
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                image:
+                  type: string
+      responses:
+        '200':
+          description: Category updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  userfind:
+                    $ref: '#/components/schemas/Category'
+        '500':
+          description: Error in updating category
+
+    delete:
+      tags:
+        - Category
+      summary: Delete a category
+      operationId: deleteCategories
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Category deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '500':
+          description: Deletion failed
+
+components:
+  schemas:
+    Wallpaper:
+      type: object
+      properties:
+        id:
+          type: integer
+        wallpaper_title:
+          type: string
+        wallpaper_image_url:
+          type: string
+        categoryId:
+          type: integer
+
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+        category_name:
+          type: string
+        category_image:
+          type: string

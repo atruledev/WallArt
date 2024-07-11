@@ -1,0 +1,29 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id      Int      @id @default(autoincrement())
+  name    String?
+
+}
+model Categories {
+  id      Int      @id @default(autoincrement())
+  category_name    String?
+  category_image   String?
+  wallpaper     wallpaper[]
+}
+model wallpaper {
+  id      Int      @id @default(autoincrement())
+  wallpaper_title    String?
+  wallpaper_image_url   String?
+  category     Categories @relation(fields: [categoryId], references: [id])
+  categoryId    Int
+  
+}
