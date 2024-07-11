@@ -9,7 +9,7 @@ function main() {
   const [selectedCategories, setSelectedCategories] = useState(null);
 
   const [showSideMenu, setShowSideMenu] = useState(false);
-  const [err, seterr] = useState(null);
+
 
   useEffect(() => {
     setTimeout(()=>{
