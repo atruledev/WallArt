@@ -1,34 +1,39 @@
 openapi: 3.0.0
 info:
-  title: Wallpaper and Categories API
+  title: Wallpaper Management API
   version: 1.0.0
   description: API for managing wallpapers and categories
+
 servers:
-  - url: http://localhost:3000
+  - url: http://localhost:3000/api
     description: Local server
 
 paths:
-  /wallpapers:
-    get:
-      tags:
-        - Wallpaper
-      summary: Get all wallpapers
-      operationId: getWallpapers
+  /admin/login:
+    post:
+      summary: Admin login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
       responses:
         '200':
-          description: A list of wallpapers
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Wallpaper'
+          description: Login successful
+        '401':
+          description: Unauthorized
 
+  /admin/categories:
     post:
+      summary: Add a new category
       tags:
-        - Wallpaper
-      summary: Add new wallpapers
-      operationId: addWallpapers
+        - Categories
       requestBody:
         required: true
         content:
@@ -38,141 +43,20 @@ paths:
               properties:
                 category_name:
                   type: string
-                files:
-                  type: array
-                  items:
-                    type: string
-                    format: binary
+                category_image:
+                  type: string
+                  format: binary
       responses:
-        '201':
-          description: Wallpapers uploaded successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                  newWallpapers:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Wallpaper'
-        '400':
-          description: Invalid category
+        '200':
+          description: Category created successfully
         '500':
           description: Internal server error
 
-  /wallpapers/{id}:
+  /admin/categories/{id}:
     put:
-      tags:
-        - Wallpaper
-      summary: Update a wallpaper
-      operationId: updateWallpaper
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      requestBody:
-        required: true
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                file:
-                  type: string
-                  format: binary
-      responses:
-        '200':
-          description: Wallpaper updated successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-        '500':
-          description: Update failed
-
-    delete:
-      tags:
-        - Wallpaper
-      summary: Delete a wallpaper
-      operationId: deleteWallpaper
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: Wallpaper deleted successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-        '500':
-          description: Error while deleting
-
-  /categories:
-    get:
-      tags:
-        - Category
-      summary: Get all categories
-      operationId: getCategories
-      responses:
-        '200':
-          description: A list of categories
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Category'
-
-    post:
-      tags:
-        - Category
-      summary: Upload a new category
-      operationId: uploadCategories
-      requestBody:
-        required: true
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                file:
-                  type: string
-                  format: binary
-      responses:
-        '200':
-          description: Category uploaded successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-        '500':
-          description: Upload failed
-
-  /categories/{id}:
-    put:
-      tags:
-        - Category
       summary: Update a category
-      operationId: updateCategories
+      tags:
+        - Categories
       parameters:
         - name: id
           in: path
@@ -182,34 +66,24 @@ paths:
       requestBody:
         required: true
         content:
-          application/json:
+          multipart/form-data:
             schema:
               type: object
               properties:
-                name:
+                category_name:
                   type: string
-                image:
+                category_image:
                   type: string
+                  format: binary
       responses:
         '200':
           description: Category updated successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                  userfind:
-                    $ref: '#/components/schemas/Category'
         '500':
-          description: Error in updating category
-
+          description: Internal server error
     delete:
-      tags:
-        - Category
       summary: Delete a category
-      operationId: deleteCategories
+      tags:
+        - Categories
       parameters:
         - name: id
           in: path
@@ -219,36 +93,228 @@ paths:
       responses:
         '200':
           description: Category deleted successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
+        '404':
+          description: Category not found
         '500':
-          description: Deletion failed
+          description: Internal server error
 
-components:
-  schemas:
-    Wallpaper:
-      type: object
-      properties:
-        id:
-          type: integer
-        wallpaper_title:
-          type: string
-        wallpaper_image_url:
-          type: string
-        categoryId:
-          type: integer
+  /categories:
+    get:
+      summary: Get categories
+      tags:
+        - Categories
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+          default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          default: 10
+        - name: pagination
+          in: query
+          schema:
+            type: string
+            enum: [on, off]
+      responses:
+        '200':
+          description: Categories retrieved successfully
+        '500':
+          description: Internal server error
 
-    Category:
-      type: object
-      properties:
-        id:
-          type: integer
-        category_name:
-          type: string
-        category_image:
-          type: string
+  /add:
+    post:
+      summary: Upload a category
+      tags:
+        - Categories
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                category_name:
+                  type: string
+                category_image:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Category uploaded successfully
+        '500':
+          description: Internal server error
+
+  /home:
+    get:
+      summary: Get categories with wallpapers
+      tags:
+        - Categories
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+          default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          default: 10
+      responses:
+        '200':
+          description: Categories with wallpapers retrieved successfully
+        '500':
+          description: Internal server error
+
+  /categories/{id}:
+    get:
+      summary: Get a category with wallpapers
+      tags:
+        - Categories
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: page
+          in: query
+          schema:
+            type: integer
+          default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          default: 10
+      responses:
+        '200':
+          description: Category with wallpapers retrieved successfully
+        '500':
+          description: Internal server error
+
+  /admin/wallpaper/{id}:
+    put:
+      summary: Update a wallpaper
+      tags:
+        - Wallpapers
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                category_image:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Wallpaper updated successfully
+        '500':
+          description: Internal server error
+    delete:
+      summary: Delete a wallpaper
+      tags:
+        - Wallpapers
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Wallpaper deleted successfully
+        '500':
+          description: Internal server error
+
+  /admin/wallpaper:
+    post:
+      summary: Add new wallpapers
+      tags:
+        - Wallpapers
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                category_name:
+                  type: string
+                category_image:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        '200':
+          description: Wallpapers added successfully
+        '500':
+          description: Internal server error
+
+  /admin/wallpapers:
+    get:
+      summary: Get all wallpapers
+      tags:
+        - Wallpapers
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+          default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          default: 50
+      responses:
+        '200':
+          description: Wallpapers retrieved successfully
+        '500':
+          description: Internal server error
+
+  /wallpapers:
+    get:
+      summary: Get random wallpapers
+      tags:
+        - Wallpapers
+      responses:
+        '200':
+          description: Wallpapers retrieved successfully
+        '500':
+          description: Internal server error
+
+  /wallpapers:
+    post:
+      summary: Search wallpapers by category
+      tags:
+        - Wallpapers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                category:
+                  type: string
+      responses:
+        '200':
+          description: Search results retrieved successfully
+        '400':
+          description: Category is required
+        '500':
+          description: Internal server error
