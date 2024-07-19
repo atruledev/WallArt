@@ -14,7 +14,7 @@ console.log(categories)
   useEffect(() => {
 
     if (categories) {
-      console.log("i'm here")
+   
    
       setCategoryData({
         category_name: categories.category_name || "",
@@ -29,7 +29,7 @@ console.log(categories)
     }
   }, [categories]);
 
-  console.log("hh",categoryData)
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

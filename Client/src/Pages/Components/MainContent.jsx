@@ -25,7 +25,7 @@ function main() {
       
         console.log("here is your data", res);
         setcategories(res.data.userfind);
-        console.log(categories);
+       
       } else {
         console.log("soory something went wrong", res.data.message);
       }
@@ -34,7 +34,7 @@ function main() {
 
   const handleSave = (categoryData) => {
     if (selectedCategories) {
-      console.log(categoryData);
+
       axios
         .put(
           `http://localhost:3000/api/admin/categories/${selectedCategories.id}`,
