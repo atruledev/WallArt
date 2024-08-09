@@ -28,7 +28,7 @@ function wallpaperContent() {
   console.log("pagecount", initialValue, lastValue);
 
   const showCategories = async () => {
-    axios.get(`http://localhost:3000/api/admin/wallpapers`).then((res) => {
+    axios.get(`/api/admin/wallpapers`).then((res) => {
       console.log("response here", res);
       if (res.status === 200) {
         console.log("here is your data", res);
@@ -63,7 +63,7 @@ function wallpaperContent() {
       console.log(categoryData);
       axios
         .put(
-          `http://localhost:3000/api/admin/wallpaper/${selectedCategories.id}`,
+          `/api/admin/wallpaper/${selectedCategories.id}`,
           categoryData
         )
         .then((res) => {
@@ -85,7 +85,7 @@ function wallpaperContent() {
         });
     } else {
       axios
-        .post("http://localhost:3000/api/admin/wallpaper", categoryData)
+        .post("/api/admin/wallpaper", categoryData)
         .then((res) => {
           if (res.status === 200) {
             console.log(categories);
@@ -125,7 +125,7 @@ function wallpaperContent() {
     try {
       console.log("Attempting to delete category with ID:", w.id);
       axios
-        .delete(`http://localhost:3000/api/admin/wallpaper/${w.id}`)
+        .delete(`/api/admin/wallpaper/${w.id}`)
         .then((res) => {
           console.log("Response from delete request:", res);
           if (res.status === 200) {
@@ -165,12 +165,12 @@ function wallpaperContent() {
       <div className="pt-12 ml-64">
         <div class="p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5 dark:bg-gray-800 dark:border-gray-700">
           <div class="w-full mb-1">
-            <div class="mb-4">
+            <div class="  ">
               <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
                 All Wallpapers
               </h1>
             </div>
-            <div class="items-center justify-between block sm:flex md:divide-x md:divide-gray-100 dark:divide-gray-700">
+            {/* <div class="items-center justify-between block sm:flex md:divide-x md:divide-gray-100 dark:divide-gray-700">
               <div class="flex items-center mb-4 sm:mb-0">
                 <form class="sm:pr-3" action="#" method="GET">
                   <label htmlFor="products-search" class="sr-only">
@@ -268,7 +268,7 @@ function wallpaperContent() {
               >
                 Add new
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
         <div class="flex flex-col">

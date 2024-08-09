@@ -6,7 +6,6 @@ function Auth() {
 
   useEffect(() => {
     const token = localStorage.getItem("validate");
-    console.log("hello");
     console.log(token);
     if (!token) {
       navigate("/");

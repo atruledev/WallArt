@@ -3,25 +3,18 @@ import React, { useEffect, useState } from "react";
 function EditContent({ name, imageName, categories, onSave, onClose }) {
   const [Loading, setLoading] = useState(false);
   const [categoryData, setCategoryData] = useState({
-    
-      category_name: '',
-      category_image: ''
-  })
-  ;
-
+    category_name: "",
+    category_image: "",
+  });
   const [preview, setpreviewimage] = useState("");
-console.log(categories)
+  console.log(categories);
   useEffect(() => {
-
     if (categories) {
-   
-   
       setCategoryData({
         category_name: categories.category_name || "",
         category_image: categories.category_image || "",
       });
     } else {
-   
       setCategoryData({
         category_name: "",
         category_image: "",
@@ -29,18 +22,13 @@ console.log(categories)
     }
   }, [categories]);
 
-
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setCategoryData((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   };
-
-  
-
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -60,7 +48,7 @@ console.log(categories)
     const formData = new FormData();
     formData.append("category_name", categoryData.category_name);
     formData.append("category_image", categoryData.category_image);
-    setLoading(true)
+    setLoading(true);
 
     onSave(formData);
   };
@@ -130,11 +118,9 @@ console.log(categories)
             >
               {imageName}
             </label>
-           
+
             {categoryData?.category_image ? (
               <>
-              
-               
                 {preview ? (
                   <img
                     src={preview}
@@ -162,10 +148,15 @@ console.log(categories)
               onChange={handleImageChange}
             />
           </div>
-        </div> 
+        </div>
         <div className="bottom-0 left-0 flex justify-center w-full pb-4 mt-4 space-x-4 sm:absolute sm:px-4 sm:mt-0">
-        {Loading ? (
-          <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+          {Loading ? (
+            <div class="lds-ellipsis">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
           ) : (
             <button
               type="submit"
@@ -174,7 +165,6 @@ console.log(categories)
               {categories ? "Update" : "Add"}
             </button>
           )}
-          
         </div>
       </form>
     </div>

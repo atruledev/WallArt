@@ -19,7 +19,7 @@ function main() {
   }, [selectedCategories]);
 
   const showCategories = async () => {
-    axios.get("http://localhost:3000/api/categories").then((res) => {
+    axios.get("/api/categories").then((res) => {
       console.log("response here", res);
       if (res.status === 200) {
       
@@ -37,7 +37,7 @@ function main() {
 
       axios
         .put(
-          `http://localhost:3000/api/admin/categories/${selectedCategories.id}`,
+          `/api/admin/categories/${selectedCategories.id}`,
           categoryData
         )
         .then((res) => {
@@ -60,7 +60,7 @@ function main() {
         });
     } else {
       axios
-        .post("http://localhost:3000/api/admin/categories", categoryData)
+        .post("/api/admin/categories", categoryData)
         .then((res) => {
           if (res.status === 200) {
             console.log(categories);
@@ -96,14 +96,14 @@ function main() {
 
   const handledelete = (c) => {
     try {
-      console.log("Attempting to delete category with ID:", c.id);
+
       axios
-        .delete(`http://localhost:3000/api/admin/categories/${c.id}`)
+        .delete(`/api/admin/categories/${c.id}`)
         .then((res) => {
           console.log("Response from delete request:", res);
           if (res.status === 200) {
             setSelectedCategories(c);
-            console.log("Category deleted successfully:", res.data);
+         
             toast.success("deleted successfully ")
             seterr(res.data.message);
           } else {
@@ -140,12 +140,12 @@ function main() {
       <div className="pt-12 ml-64">
         <div class="p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5 dark:bg-gray-800 dark:border-gray-700">
           <div class="w-full mb-1">
-            <div class="mb-4">
+            <div class="">
               <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
                 All Categories
               </h1>
             </div>
-            <div class="items-center justify-between block sm:flex md:divide-x md:divide-gray-100 dark:divide-gray-700">
+            {/* <div class="items-center justify-between block sm:flex md:divide-x md:divide-gray-100 dark:divide-gray-700">
               <div class="flex items-center mb-4 sm:mb-0">
                 <form class="sm:pr-3" action="#" method="GET">
                   <label for="products-search" class="sr-only">
@@ -243,7 +243,7 @@ function main() {
               >
                 Add new {}
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
         <div class="flex flex-col">

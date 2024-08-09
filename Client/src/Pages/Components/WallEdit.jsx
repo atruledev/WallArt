@@ -43,7 +43,7 @@ function WallEdit({ imageName, categories, onSave, onClose }) {
   const getCategories = async () => {
     try {
       const getCategories = await axios
-        .get("http://localhost:3000/api/categories")
+        .get("/api/categories")
         .then((res) => {
           console.log("datahere", res.data.userfind);
           setCat(res.data.userfind);
